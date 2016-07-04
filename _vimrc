@@ -22,6 +22,7 @@ call neobundle#begin(expand('~/.vim/bundle'))
   NeoBundle 'nathanaelkane/vim-indent-guides'
   NeoBundle 'Shougo/neocomplete'
   NeoBundle 'mattn/emmet-vim'
+  NeoBundle "tyru/caw.vim.git"
 call neobundle#end()
 
 " 読み込んだプラグインも含め、ファイルタイプの検出、ファイルタイプ別プラグイン/インデントを有効化する
@@ -78,7 +79,7 @@ map <silent> [Tag]x :tabclose<CR>
 " tx タブを閉じる
 map <silent> [Tag]n :tabnext<CR>
 " tn 次のタブ
-map <silent> [Tag]v :tabprevious<CR>
+map <silent> [Tag]b :tabprevious<CR>
 " tp 前のタブ
 
 cnoremap tree :NERDTreeToggle<CR>
@@ -224,3 +225,6 @@ let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 let g:user_emmet_leader_key='<c-t>'
 
 set undodir=%userprofile%/.vim/undo
+
+nmap <Leader>c <Plug>(caw:i:toggle)
+vmap <Leader>c <Plug>(caw:i:toggle)

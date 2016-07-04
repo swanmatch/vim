@@ -21,6 +21,8 @@ call neobundle#begin(expand('~/.vim/bundle'))
   " インデントに色を付けて見やすくする
   NeoBundle 'nathanaelkane/vim-indent-guides'
   NeoBundle 'Shougo/neocomplete'
+  NeoBundle 'mattn/emmet-vim'
+  NeoBundle "tyru/caw.vim.git"
 call neobundle#end()
 
 " 読み込んだプラグインも含め、ファイルタイプの検出、ファイルタイプ別プラグイン/インデントを有効化する
@@ -77,7 +79,7 @@ map <silent> [Tag]x :tabclose<CR>
 " tx タブを閉じる
 map <silent> [Tag]n :tabnext<CR>
 " tn 次のタブ
-map <silent> [Tag]p :tabprevious<CR>
+map <silent> [Tag]b :tabprevious<CR>
 " tp 前のタブ
 
 cnoremap tree :NERDTreeToggle<CR>
@@ -87,6 +89,15 @@ noremap <S-h>   ^
 noremap <S-j>   }
 noremap <S-k>   {
 noremap <S-l>   $
+
+autocmd User Rails.controller* Rnavcommand api app/controllers/api -glob=**/* -suffix=_controller.rb
+autocmd User Rails.controller* Rnavcommand tmpl app/controllers/tmpl -glob=**/* -suffix=_controller.rb
+autocmd User Rails Rnavcommand config config   -glob=*.*  -suffix= -default=routes.rb
+autocmd User Rails nmap :<C-u>RTcontroller :<C-u>Rc
+autocmd User Rails nmap :<C-u>RTmodel :<C-u>Rm
+autocmd User Rails nmap :<C-u>RTview :<C-u>Rv
+
+
 
 set ts=2 sw=2 et
 
@@ -210,3 +221,10 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
+" let g:user_emmet_leader_key='<c-e>'
+let g:user_emmet_leader_key='<c-t>'
+
+set undodir=%userprofile%/.vim/undo
+
+nmap <Leader>c <Plug>(caw:i:toggle)
+vmap <Leader>c <Plug>(caw:i:toggle)
