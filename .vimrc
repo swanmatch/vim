@@ -23,6 +23,7 @@ call neobundle#begin(expand('~/.vim/bundle'))
   NeoBundle 'Shougo/neocomplete'
   NeoBundle 'mattn/emmet-vim'
   NeoBundle "tyru/caw.vim.git"
+  NeoBundle 'ConradIrwin/vim-bracketed-paste'
 call neobundle#end()
 
 " 読み込んだプラグインも含め、ファイルタイプの検出、ファイルタイプ別プラグイン/インデントを有効化する
