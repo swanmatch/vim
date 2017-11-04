@@ -24,6 +24,7 @@ call neobundle#begin(expand('~/.vim/bundle'))
   NeoBundle 'mattn/emmet-vim'
   NeoBundle "tyru/caw.vim.git"
   NeoBundle 'ConradIrwin/vim-bracketed-paste'
+  NeoBundle 'tomasr/molokai'
 call neobundle#end()
 
 " 読み込んだプラグインも含め、ファイルタイプの検出、ファイルタイプ別プラグイン/インデントを有効化する
@@ -98,16 +99,25 @@ autocmd User Rails nmap :<C-u>RTcontroller :<C-u>Rc
 autocmd User Rails nmap :<C-u>RTmodel :<C-u>Rm
 autocmd User Rails nmap :<C-u>RTview :<C-u>Rv
 
-
+syntax on
+colorscheme molokai
 
 set ts=2 sw=2 et
 
 let g:nerdtree_tabs_open_on_new_tab=1
 let g:nerdtree_tabs_open_on_console_startup=1
 let NERDTreeWinSize=48
+" インデントに色付け
 let g:indent_guides_enable_on_vim_startup = 1
-" let g:indent_guides_start_level=2
+" let g:indent_guides_start_level = 0
 let g:indent_guides_guide_size = 2
+let g:indent_guides_auto_colors = 0
+" 奇数インデントのカラー
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
+" 偶数インデントのカラー
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
+" ハイライト色の変化の幅
+let g:indent_guides_color_change_percent = 30
 
 set list  " 不可視文字を表示する
 set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%
@@ -218,7 +228,7 @@ endif
 let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
 
 if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
+  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
