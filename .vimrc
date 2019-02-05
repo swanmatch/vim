@@ -25,6 +25,15 @@ call neobundle#begin(expand('~/.vim/bundle'))
   NeoBundle "tyru/caw.vim.git"
   NeoBundle 'ConradIrwin/vim-bracketed-paste'
   NeoBundle 'tomasr/molokai'
+  " コメントトグル(_)
+  NeoBundle 'tomtom/tcomment_vim'
+  " 末尾空白強調
+  NeoBundle 'bronson/vim-trailing-whitespace'
+  " vim拡張
+  NeoBundle 'airblade/vim-gitgutter'
+  NeoBundle 'tpope/vim-fugitive'
+  " タブ復元
+  NeoBundle 'xolox/vim-session', { 'depends' : 'xolox/vim-misc' }
 call neobundle#end()
 
 " 読み込んだプラグインも含め、ファイルタイプの検出、ファイルタイプ別プラグイン/インデントを有効化する
@@ -239,3 +248,34 @@ set undodir=%userprofile%/.vim/undo
 
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
+
+""""""""""""""""""""""""""""""
+" 全角スペースの表示
+""""""""""""""""""""""""""""""
+function! ZenkakuSpace()
+  highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
+endfunction
+
+if has('syntax')
+  augroup ZenkakuSpace
+    autocmd!
+    autocmd ColorScheme * call ZenkakuSpace()
+    autocmd VimEnter,WinEnter,BufRead * let w:m1=matchadd('ZenkakuSpace', '　')
+  augroup END
+  call ZenkakuSpace()
+endif
+""""""""""""""""""""""""""""""i
+
+"Git
+nnoremap [fugitive]  <Nop>
+nnoremap G [fugitive]
+nnoremap [fufitive]p :GitGutterPreviewHunk<CR>
+nnoremap [fugitive]s :Gstatus<CR><C-w>T
+nnoremap [fugitive]a :Gwrite<CR>
+nnoremap [fugitive]c :Gcommit-v<CR>
+nnoremap [fugitive]b :Gblame<CR>
+nnoremap [fugitive]d :Gdiff<CR>
+nnoremap [fugitive]m :Gmerge<CR>
+
+" FileOpenをタブ化
+nnoremap :te :tabe<Space>
