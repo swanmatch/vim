@@ -16,6 +16,7 @@ call neobundle#begin(expand('~/.vim/bundle'))
   NeoBundle 'romanvbabenko/rails.vim'
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'scrooloose/nerdtree'
+  NeoBundle 'Xuyuanp/nerdtree-git-plugin'
   NeoBundle 'jistr/vim-nerdtree-tabs'
   NeoBundle 'tpope/vim-endwise'
   " インデントに色を付けて見やすくする
@@ -75,6 +76,7 @@ endfunction "}}}
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 set showtabline=2 " 常にタブラインを表示
 
+" TabControl
 " The prefix key.
 nnoremap    [Tag]   <Nop>
 nmap    t [Tag]
@@ -83,10 +85,9 @@ for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 " t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
-
 map <silent> [Tag]c :tablast <bar> tabnew<CR>
 " tc 新しいタブを一番右に作る
-map <silent> [Tag]x :tabclose<CR>
+map <silent> [Tag]q :tabclose<CR>
 " tx タブを閉じる
 map <silent> [Tag]n :tabnext<CR>
 " tn 次のタブ
@@ -95,18 +96,17 @@ map <silent> [Tag]b :tabprevious<CR>
 
 cnoremap tree :NERDTreeToggle<CR>
 
+"noremap <S-h>   ^
+"noremap <S-j>   }
+"noremap <S-k>   {
+"noremap <S-l>   $
 
-noremap <S-h>   ^
-noremap <S-j>   }
-noremap <S-k>   {
-noremap <S-l>   $
-
-autocmd User Rails.controller* Rnavcommand api app/controllers/api -glob=**/* -suffix=_controller.rb
-autocmd User Rails.controller* Rnavcommand tmpl app/controllers/tmpl -glob=**/* -suffix=_controller.rb
+"autocmd User Rails.controller* Rnavcommand api app/controllers/api -glob=**/* -suffix=_controller.rb
+"autocmd User Rails.controller* Rnavcommand tmpl app/controllers/tmpl -glob=**/* -suffix=_controller.rb
 autocmd User Rails Rnavcommand config config   -glob=*.*  -suffix= -default=routes.rb
-autocmd User Rails nmap :<C-u>RTcontroller :<C-u>Rc
-autocmd User Rails nmap :<C-u>RTmodel :<C-u>Rm
-autocmd User Rails nmap :<C-u>RTview :<C-u>Rv
+"autocmd User Rails nmap :<C-u>RTcontroller :<C-u>Rc
+"autocmd User Rails nmap :<C-u>RTmodel :<C-u>Rm
+"autocmd User Rails nmap :<C-u>RTview :<C-u>Rv
 
 syntax on
 colorscheme molokai
@@ -122,9 +122,9 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 2
 let g:indent_guides_auto_colors = 0
 " 奇数インデントのカラー
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=darkgray
 " 偶数インデントのカラー
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkmagenta
 " ハイライト色の変化の幅
 let g:indent_guides_color_change_percent = 30
 
@@ -188,7 +188,6 @@ set whichwrap=b,s,h,l,<,>,[,]
 set nowrapscan
 " Windowsでディレクトリパスの区切り文字に / を使えるようにする
 set shellslash
-
 
 highlight Pmenu ctermbg=4
 highlight PmenuSel ctermbg=1
@@ -264,12 +263,16 @@ if has('syntax')
   augroup END
   call ZenkakuSpace()
 endif
-""""""""""""""""""""""""""""""i
+
+"Rails
+nnoremap <c-R>m :RTmodel<CR>
+nnoremap <c-R>v :RTview<CR>
+nnoremap <c-R>c :RTcontroller<CR>
 
 "Git
 nnoremap [fugitive]  <Nop>
-nnoremap G [fugitive]
-nnoremap [fufitive]p :GitGutterPreviewHunk<CR>
+nmap :G [fugitive]
+nnoremap [fugitive]p :GitGutterPreviewHunk<CR>
 nnoremap [fugitive]s :Gstatus<CR><C-w>T
 nnoremap [fugitive]a :Gwrite<CR>
 nnoremap [fugitive]c :Gcommit-v<CR>
@@ -279,3 +282,16 @@ nnoremap [fugitive]m :Gmerge<CR>
 
 " FileOpenをタブ化
 nnoremap :te :tabe<Space>
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified":"*",
+    \ "Staged":"+",
+    \ "Untracked":"@",
+    \ "Renamed":">",
+    \ "Unmerged":"=",
+    \ "Deleted":"-",
+    \ "Dirty":"&",
+    \ "Clean":"_",
+    \ "Unknown":"?"
+    \ }
+let g:NERDTreeShowIgnoredStatus = 1
