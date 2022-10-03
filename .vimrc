@@ -283,7 +283,7 @@ nnoremap [fugitive]m :Gmerge<CR>
 " FileOpenをタブ化
 nnoremap :te :tabe<Space>
 
-let g:NERDTreeIndicatorMapCustom = {
+let g:g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified":"*",
     \ "Staged":"+",
     \ "Untracked":"@",
@@ -294,4 +294,4 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Clean":"_",
     \ "Unknown":"?"
     \ }
-let g:NERDTreeShowIgnoredStatus = 1
+let g:g:NERDTreeGitStatusShowIgnored = 1
